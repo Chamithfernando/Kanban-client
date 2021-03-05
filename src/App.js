@@ -3,18 +3,22 @@ import './App.css';
 import Dashboard from './component/Dashboard';
 import Header from './component/Layout/Header';
 import 'bootstrap/dist/css/bootstrap.min.css'; 
+import {BrowserRouter as Router,Route,Switch} from "react-router-dom";
+import AddProject from './component/Project/AddProject';
 
 function App() {
   return (
 
+    <Router>
+
     <div className="app">
       <Header/>
-      <Dashboard/>
-    
+      <Route exact path="/dashboard" component={Dashboard}/>
+    ` <Route exact path="/addProject" component={AddProject}/>
    
     </div>
 
-   
+    </Router>
     
     
 
