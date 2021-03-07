@@ -102,3 +102,7 @@ img {
 .form-control::placeholder {
   color: #bbb !important;
 }
+
+.pi {
+  color: red;
+}

@@ -10,11 +10,12 @@ import { createProject}from "../../actions/projectActions";
         super()
 
         this.state ={
-            "projectName": "",
-            "projectIdentifier": "",
-            "description": "",
-            "start_date": "",
-            "end_date": "",
+            projectName: "",
+            projectIdentifier: "",
+            description: "",
+            start_date: "",
+            end_date: "",
+            errors: {}
 
 
         };
@@ -22,6 +23,15 @@ import { createProject}from "../../actions/projectActions";
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
+    }
+
+
+    //Life cycle hooks
+    componentWillReceiveProps(nextProps){
+
+        if(nextProps.errors){
+            this.setState({errors : nextProps.errors});
+        }
     }
 
     onChange(e){
@@ -46,6 +56,10 @@ import { createProject}from "../../actions/projectActions";
 
 
     render() {
+
+
+        const { errors } = this.state;
+
         return (
             <div>
             {
@@ -72,23 +86,27 @@ import { createProject}from "../../actions/projectActions";
                                 name="projectName"
                                 value={this.state.projectName}
                                 onChange={this.onChange} />
+                                <p className="pi">{errors.projectName}</p>
                             </div>
                             <div className="form-group">
                                 <input type="text" className="form-control form-control-lg" placeholder="Unique Project ID"
                                 name="projectIdentifier" value={this.state.projectIdentifier}
                                 onChange={this.onChange} 
                                      />
+                                     <p className="pi">{errors.projectIdentifier}</p>
                             </div>
                               
                             <div className="form-group">
                                 <textarea className="form-control form-control-lg" placeholder="Project Description"
                                 name="description" value={this.state.description}
                                 onChange={this.onChange} ></textarea>
+                                <p className="pi">{errors.description}</p>
                             </div>
                             <h6>Start Date</h6>
                             <div className="form-group">
                                 <input type="date" className="form-control form-control-lg" name="start_date" 
                                 name="start_date" value={this.state.start_date} onChange={this.onChange} />
+                                
                             </div>
                             <h6>Estimated End Date</h6>
                             <div className="form-group">
@@ -109,7 +127,12 @@ import { createProject}from "../../actions/projectActions";
  
 
 AddProject.propTypes ={
-    createProject : PropTypes.func.isRequired
+    createProject : PropTypes.func.isRequired,
+    errors:PropTypes.object.isRequired
 }
 
-export default connect(null,{createProject}) (AddProject);
+const mapStateToProps = state =>({
+   errors: state.errors 
+});
+
+export default connect(mapStateToProps,{createProject}) (AddProject);
