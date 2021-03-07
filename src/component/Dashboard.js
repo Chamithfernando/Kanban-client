@@ -4,6 +4,7 @@ import ProjectIteam from './Project/ProjectIteam';
 import {connect} from "react-redux";
 import {getProjects} from "../actions/projectActions"
 import PropTypes from "prop-types";
+import ProjectItem from "./Project/ProjectIteam";
 
 
 
@@ -18,6 +19,17 @@ class Dashboard extends Component {
 
    
     render() { 
+
+
+        const { projects } = this.props.project;
+
+        const projectObject = {
+
+            projectName: "ProjectName PROPS",
+            projectIdentifier : "PROPS",
+            description : "description from PROPS"
+        }
+
         return ( 
             <div className="projects">
             <div className="container">
@@ -29,7 +41,9 @@ class Dashboard extends Component {
                         <br />
                         <hr />
     
-                        <ProjectIteam/>
+                        {projects.map(project => (
+                            <ProjectItem key={project.id} project={project} />
+                          ))}
                         
                     </div>
                 </div>
