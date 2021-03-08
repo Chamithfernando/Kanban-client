@@ -9,6 +9,13 @@ export const createProject = (project, history) => async dispatch => {
         await axios.post ("http://localhost:8080/api/project",project);
         history.push("/dashboard");
 
+        //This did not display error maessage after updating another value in the same field
+        //Placing all the errors are null on this step.
+        dispatch({
+            type: GET_ERRORS,
+            payload:{}
+        });
+
     } catch (error) {
         dispatch({
             type: GET_ERRORS,
@@ -32,11 +39,18 @@ export const getProjects = () => async dispatch => {
     //below 3
 }
 
-export const getProject = (id, history) =>async dispatch =>{
+export const getProject = (id, history) => async dispatch =>{
+
+    try {
+        
 
     const res = await axios.get(`http://localhost:8080/api/project/get/${id}`)
     dispatch({
         type : GET_PROJECT,
         payload : res.data
-    })
-}
+    });
+
+    } catch (error) {
+        history.push("/dashboard");
+    }
+};
